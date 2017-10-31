@@ -7,19 +7,25 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:elevation="@dimen/layoutElevation"
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_height="wrap_content">
+        android:background="@color/backGround"
+        android:layout_height="@dimen/layoutHeight">
 
         <EditText
+            android:layout_gravity="center_vertical"
+            android:background="@color/backGround"
             android:layout_width="0dp"
             android:layout_weight="4"
             android:inputType="textCapSentences"
-            android:hint="Hello"
-            android:layout_height="wrap_content" />
+            android:hint="@string/searchText"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/searchPaddingLeft"/>
 
 
         <ImageButton
+            android:background="@color/backGround"
             android:layout_weight="1"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
