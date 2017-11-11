@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="layoutHeight">50dp</dimen>
+    <dimen name="layoutElevation">4dp</dimen>
+    <dimen name="searchPaddingLeft">15dp</dimen>
+    <dimen name="searchedit">24sp</dimen>
+</resources>
