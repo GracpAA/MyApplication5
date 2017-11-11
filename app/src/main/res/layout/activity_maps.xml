@@ -3,34 +3,38 @@
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:elevation="@dimen/layoutElevation"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
+        android:layout_height="@dimen/layoutHeight"
         android:background="@color/backGround"
-        android:layout_height="@dimen/layoutHeight">
+        android:elevation="@dimen/layoutElevation"
+        android:orientation="horizontal">
 
         <EditText
-            android:layout_gravity="center_vertical"
-            android:background="@color/backGround"
+            android:id="@+id/searchEdit"
             android:layout_width="0dp"
-            android:layout_weight="4"
-            android:inputType="textCapSentences"
-            android:hint="@string/searchText"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/searchPaddingLeft"/>
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/searchPaddingLeft"
+            android:layout_weight="4"
+            android:textSize="@dimen/searchedit"
+            android:background="@color/backGround"
+            android:hint="@string/searchText"
+            android:inputType="textCapSentences"
+            android:textColor="@color/black" />
 
 
         <ImageButton
-            android:background="@color/backGround"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
+            android:id="@+id/searchButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_search_black_24dp"/>
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@color/backGround"
+            android:src="@drawable/ic_search_black_24dp" />
     </LinearLayout>
 
 
