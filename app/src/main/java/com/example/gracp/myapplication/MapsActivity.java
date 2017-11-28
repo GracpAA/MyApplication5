@@ -18,6 +18,16 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -25,7 +35,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     boolean mapType = true;
 
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+    DatabaseReference myRef1;
 
+    //List<Event> events = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +47,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        database = FirebaseDatabase.getInstance();
         final EditText searchText = findViewById(R.id.searchEdit);
         final ImageButton searchButton = findViewById(R.id.searchButton);
         searchButton.setEnabled(false);
@@ -65,7 +80,62 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MapsActivity.this,R.string.text_activity, Toast.LENGTH_SHORT).show();
+//                Event event = new Event("description2","+375447533487","title2",53.1,43.1);
+                mMap.clear();
+                mMap.setInfoWindowAdapter(new CustomWindowAdapter(MapsActivity.this));
+                String child = searchText.getText().toString();
+                myRef = database.getReference("Cities").child(child);
+//                myRef1 = database.getReference("Users");
+//                myRef1.child(child).setValue(event);
+
+
+                final Query query = myRef;
+                query.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Event event = dataSnapshot.getValue(Event.class);
+                        //events.add(event);
+                        String name = event.getTitle();
+
+                        String phone ="\n"+event.getPhone();
+                        String description = event.getDescription();
+                        LatLng coordinates = new LatLng(event.getV(), event.getV1());
+                        mMap.addMarker(new MarkerOptions().position(coordinates).title(name).snippet(description+phone));
+
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+////                for(Event i: events){
+////                    String name = i.getTitle();
+////                    String description = i.getDescription();
+////                    LatLng coordinats = new LatLng(i.getV(), i.getV1());
+////                    mMap.addMarker(new MarkerOptions().position(coordinats).title(name));
+////                }
+//               // events.clear();
+
+                //Event event = new Event("description2","+375447533487","title2",53.1,43.1);
+                //myRef.push().setValue(event);
+
             }
         });
     }
@@ -87,12 +157,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                if (mapType)  {
                    mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                    mapType = false;
-                   item.setIcon(R.drawable.ic_remove_red_eye_black1_24dp);
+                   item.setIcon(R.drawable.ic_map_black_24dp);
                }
                else {
                    mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                    mapType = true;
-                   item.setIcon(R.drawable.ic_remove_red_eye_black_24dp);
+                   item.setIcon(R.drawable.ic_map_black1_24dp);
                }
 
         }

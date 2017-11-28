@@ -7,5 +7,5 @@
         android:title="@string/menu_setting"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:icon="@drawable/ic_remove_red_eye_black_24dp"/>
+        android:icon="@drawable/ic_map_black1_24dp"/>
 </menu>
